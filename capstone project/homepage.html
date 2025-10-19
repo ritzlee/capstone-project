@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Homepage</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="homepage">
+  <div class="app-wrap">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/logo.png" alt="logo">
+        <div style="color:#fff; font-weight:600">Online alert system</div>
+      </div>
+      <div style="height:1px; background:rgba(255,255,255,0.04)"></div>
+      <div style="display:flex; gap:10px; align-items:center">
+        <img src="assets/avatar.png" alt="avatar" style="width:34px;height:34px;border-radius:50%">
+        <div style="font-size:13px;color:#bfc9d9">Giga Chad</div>
+      </div>
+      <nav class="nav">
+  <a href="activity.html" class="active">Activities</a>
+  <a href="account.html">Account</a>
+        <a href="#">Messages</a>
+        <a href="#">Notifications</a>
+      </nav>
+      <div style="flex:1"></div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <a href="#" style="color:#cfcfcf; text-decoration:none">Help</a>
+        <a href="index.html" style="color:#ff7b6b; text-decoration:none">Logout</a>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="header-hero">
+
+      </div>
+      <div class="content">
+        <div class="card">
+          <p style="text-align:left; font-size:13px; color: #e6f0fb;">
+            Welcome to the Online Alert System for School Activities a platform designed to keep the STUDENTS community informed, connected, and updated. This system provides real-time notifications for urgent school announcements, events, and activities, ensuring that students never miss important updates.
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('.nav a');
+      if (!a) return;
+      // update active state
+      document.querySelectorAll('.nav a').forEach(function(x){ x.classList.remove('active'); });
+      a.classList.add('active');
+      // only prevent default for in-page anchors (href starting with '#')
+      var href = a.getAttribute('href') || '';
+      if (href.trim().charAt(0) === '#') {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>

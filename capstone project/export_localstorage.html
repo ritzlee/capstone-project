@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Export localStorage</title>
+</head>
+<body>
+<h3>Export localStorage keys (activities, users, currentUser)</h3>
+<button id="export">Export</button>
+<pre id="out"></pre>
+<script>
+document.getElementById('export').addEventListener('click', function(){
+  var exportData = {
+    activities: localStorage.getItem('activities'),
+    users: localStorage.getItem('users'),
+    currentUser: localStorage.getItem('currentUser')
+  };
+  var s = JSON.stringify(exportData, null, 2);
+  document.getElementById('out').textContent = s;
+  // auto-download
+  var blob = new Blob([s], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'capstone-localstorage.json';
+  a.click();
+});
+</script>
+</body>
+</html>

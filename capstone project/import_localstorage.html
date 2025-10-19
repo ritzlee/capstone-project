@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Import localStorage</title>
+</head>
+<body>
+<h3>Import localStorage JSON exported from the other device</h3>
+<input type="file" id="file">
+<pre id="out"></pre>
+<script>
+document.getElementById('file').addEventListener('change', function(e){
+  var f = e.target.files[0];
+  var reader = new FileReader();
+  reader.onload = function(){
+    try {
+      var data = JSON.parse(reader.result);
+      if (data.activities) localStorage.setItem('activities', data.activities);
+      if (data.users) localStorage.setItem('users', data.users);
+      if (data.currentUser) localStorage.setItem('currentUser', data.currentUser);
+      document.getElementById('out').textContent = 'Imported successfully. Reload your app pages.';
+    } catch (err) {
+      document.getElementById('out').textContent = 'Error: ' + err.message;
+    }
+  };
+  reader.readAsText(f);
+});
+</script>
+</body>
+</html>

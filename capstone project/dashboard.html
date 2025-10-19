@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <img src="assets/logo.png" alt="Logo" class="logo">
+            <h2>Dashboard</h2>
+            <p id="welcomeText" style="color:white">Welcome!</p>
+            <div style="margin-top:20px; display:flex; gap:10px; justify-content:center">
+                <a href="index.html" class="options-link">Logout</a>
+                <a href="signup.html" class="options-link">Create account</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        try {
+            var current = localStorage.getItem('currentUser');
+            if (current) {
+                var u = JSON.parse(current);
+                var el = document.getElementById('welcomeText');
+                if (el) el.textContent = 'Welcome, ' + (u.firstName || u.email || 'User') + '!';
+            }
+        } catch (e) {
+            console.warn('Error reading currentUser from localStorage', e);
+        }
+    </script>
+</body>
+</html>

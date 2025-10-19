@@ -1,0 +1,227 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-image: url('assets/background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login-box {
+    background-color: rgba(6, 38, 126, 0.76); 
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.logo {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #fff; 
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    color: #eee;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    color: #333; 
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    color: #8cb9ff; 
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.login-button {
+    background-color: #3949ab; 
+    color: rgb(255, 255, 255);
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #283593; /* Even Darker Blue on Hover */
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.options a {
+    color: #8cb9ff; /* Lighter Blue for Options */
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.google-signin-button {
+    background-color: white;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 14px 20px; 
+    font-size: 18px; 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-top: 10px; 
+}
+
+.google-signin-button:hover {
+    background-color: #f5f5f5;
+}
+
+.google-signin-button img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.stay-updated {
+    margin-top: 30px;
+    font-size: 12px;
+    color: #eee; 
+}
+
+.app-wrap {
+    width: 1100px;
+    max-width: calc(100% - 40px);
+    height: 700px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    margin: 20px auto;
+}
+
+
+body.homepage {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    display: block;
+    background: #000; 
+}
+
+body.homepage .app-wrap {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+
+@media (max-width: 900px) {
+    body.homepage .app-wrap { width: 100%; height: 100vh; }
+    .sidebar { width: 100%; flex-direction: row; }
+    .main { padding: 12px; }
+    .card { width: 100%; padding:20px }
+}
+
+.sidebar {
+    width: 260px;
+    background: #2f3236;
+    color: #cfcfcf;
+    padding: 18px 14px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.sidebar .brand {
+    display:flex; align-items:center; gap:12px;
+}
+
+.sidebar .brand img { width:36px; height:36px; border-radius:8px; }
+
+.sidebar .nav { margin-top:8px; display:flex; flex-direction:column; gap:10px; }
+
+.nav a {
+    color: #cfcfcf; text-decoration:none; padding:10px 12px; border-radius:8px; display:flex; align-items:center; gap:10px; font-size:15px;
+}
+
+.nav a:hover { background: rgba(255,255,255,0.03); color:#fff; transform: translateX(4px); transition: all 180ms ease; }
+
+.nav a.active { background: rgba(111,66,193,0.12); color:#8b5cf6; }
+
+.main {
+    flex:1; background: #2f73c0; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:30px; box-sizing:border-box;
+}
+
+.main .header-hero { width:100%; height:140px; background-image: url('assets/header-clouds.jpg'); background-size:cover; background-position:center; border-bottom: 1px solid rgba(255,255,255,0.04); }
+
+.main .content {
+    width:100%; display:flex; justify-content:center; align-items:center; padding-top:40px;
+}
+
+.card {
+    width: 68%; background: rgba(255,255,255,0.05); padding:40px; border-radius:6px; box-shadow: inset 0 0 0 60px rgba(255,255,255,0.02);
+    color:#e7f0fb; font-size:13px; line-height:1.6;
+}
+
+/* Activity list integration */
+.activity-item { display:flex; gap:14px; align-items:flex-start; background:#ffffff; padding:14px; border-radius:12px; margin-bottom:12px; box-shadow: 0 4px 12px rgba(12,20,35,0.06); }
+.activity-avatar { width:56px; height:56px; background:#e8eef7; border-radius:8px; flex-shrink:0 }
+.activity-title { font-weight:700; color:#1b3650; font-size:14px }
+.activity-meta { font-size:12px; color:#6b7b8f; margin-bottom:6px }
+.activity-text { color:#3b4b62; font-size:13px }
+
+@media (max-width:900px) {
+    .activity-item { padding:10px }
+    .activity-avatar { width:48px; height:48px }
+}
+
+/* small responsive tweaks */
+@media (max-width: 900px) {
+    .app-wrap { flex-direction:column; height:auto; }
+    .sidebar { width:100%; flex-direction:row; overflow:auto; }
+    .main .card { width: 90%; }
+}

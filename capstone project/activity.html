@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Activities</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="homepage">
+  <div class="app-wrap">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/logo.png" alt="logo">
+        <div style="color:#fff; font-weight:600">Online alert system</div>
+      </div>
+      <div style="height:1px; background:rgba(255,255,255,0.04)"></div>
+      <div style="display:flex; gap:10px; align-items:center">
+        <img src="assets/avatar.png" alt="avatar" style="width:34px;height:34px;border-radius:50%">
+        <div style="font-size:13px;color:#bfc9d9">User</div>
+      </div>
+      <nav class="nav">
+  <a href="activity.html" class="active">Activities</a>
+  <a href="account.html">Account</a>
+        <a href="#">Messages</a>
+        <a href="#">Notifications</a>
+      </nav>
+      <div style="flex:1"></div>
+      <div style="display:flex; flex-direction:column; gap:8px">
+        <a href="#" style="color:#cfcfcf; text-decoration:none">Help</a>
+        <a href="index.html" style="color:#ff7b6b; text-decoration:none">Logout</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="header-hero"></div>
+      <div class="content" style="align-items:flex-start; padding-top:26px;">
+        <div style="width:100%">
+            <div style="background:#6685c8; padding:10px 16px; border-radius:8px; color:#fff; text-align:center; margin-bottom:18px">Activities</div>
+            <div id="feed" aria-live="polite"></div>
+          </div>
+      </div>
+    </main>
+  </div>
+
+  <template id="activityTpl">
+    <div class="activity-item">
+      <div class="activity-avatar"></div>
+      <div class="activity-body">
+        <div class="activity-title"></div>
+        <div class="activity-meta"></div>
+        <div class="activity-text"></div>
+      </div>
+    </div>
+  </template>
+  <script src="script.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      function renderActivities(list) {
+        var feed = document.getElementById('feed');
+        feed.innerHTML = '';
+        list.forEach(function (a) {
+          var tpl = document.getElementById('activityTpl');
+          var node = tpl.content.cloneNode(true);
+          node.querySelector('.activity-title').textContent = a.title || 'Untitled';
+          node.querySelector('.activity-meta').textContent = a.date || '';
+          node.querySelector('.activity-text').textContent = a.body || '';
+          feed.appendChild(node);
+        });
+      }
+
+      function loadAndRender() {
+        var list = [];
+        try {
+          if (window.activityAPI && typeof window.activityAPI.getActivities === 'function') {
+            list = window.activityAPI.getActivities() || [];
+          }
+        } catch (err) {
+          console.warn('activityAPI not ready', err);
+        }
+        renderActivities(list);
+      }
+
+      // Wait for activityAPI to be available (script.js may attach it on DOMContentLoaded)
+      if (window.activityAPI && typeof window.activityAPI.getActivities === 'function') {
+        loadAndRender();
+      } else {
+        var tries = 0;
+        var t = setInterval(function () {
+          tries++;
+          if (window.activityAPI && typeof window.activityAPI.getActivities === 'function') {
+            clearInterval(t);
+            loadAndRender();
+          } else if (tries > 20) {
+            clearInterval(t);
+            loadAndRender();
+          }
+        }, 100);
+      }
+
+      // No post form on this page (admin will post). We only render the feed and listen for updates.
+
+      // Listen for storage events to update in other tabs
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'activities_update' || e.key === 'activities') {
+          loadAndRender();
+        }
+      });
+    });
+  </script>
+  <style>
+    /* local styles for activity list */
+    
+    .activity-item { display:flex; gap:12px; align-items:flex-start; background:white; padding:14px; border-radius:10px; margin-bottom:12px; box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+    .activity-avatar { width:56px; height:56px; background:#e3e6ea; border-radius:8px; flex-shrink:0 }
+    .activity-title { font-weight:600; color:#17324d; }
+    .activity-meta { font-size:12px; color:#6b7b8f; margin-bottom:8px }
+    .activity-text { color:#333; font-size:13px }
+  </style>
+</body>
+</html>
