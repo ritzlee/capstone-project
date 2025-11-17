@@ -43,7 +43,29 @@
       </div>
     </main>
   </div>
+  <script src="script.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Authentication check - redirect to login if not authenticated
+      try {
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+          window.location.href = 'index.html';
+          return;
+        }
+
+        // Load and display user data
+        const user = JSON.parse(currentUser);
+        const userNameEl = document.getElementById('userName');
+        if (userNameEl) {
+          userNameEl.textContent = user.firstName || user.email || 'User';
+        }
+      } catch (error) {
+        console.warn('Authentication error:', error);
+        window.location.href = 'index.html';
+      }
+    });
+
     document.addEventListener('click', function(e){
       var a = e.target.closest && e.target.closest('.nav a');
       if (!a) return;
