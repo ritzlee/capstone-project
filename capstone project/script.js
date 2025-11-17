@@ -49,6 +49,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Helper function for safe currentUser operations
+    function getCurrentUserFromStorage() {
+        try {
+            const data = localStorage.getItem('currentUser');
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.warn('Error reading current user from localStorage:', error);
+            return null;
+        }
+    }
+
+    function saveCurrentUserToStorage(user) {
+        try {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+        } catch (error) {
+            console.warn('Error saving current user to localStorage:', error);
+            alert('Error saving session. Please check your browser settings.');
+        }
+    }
+
     var loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', function (event) {
@@ -57,11 +77,11 @@ document.addEventListener('DOMContentLoaded', function () {
             var username = (document.getElementById('username') || {}).value || '';
             var password = (document.getElementById('password') || {}).value || '';
 
-            var users = JSON.parse(localStorage.getItem('users') || '[]');
+            var users = getUsersFromStorage();
             var user = users.find(function (u) { return u.email === username && u.password === password; });
 
                     if (user) {
-                        localStorage.setItem('currentUser', JSON.stringify(user));
+                        saveCurrentUserToStorage(user);
                         window.location.href = 'dashboard.html';
                     } else {
                 alert('Invalid credentials. Make sure you used the same email and password you registered with.');
