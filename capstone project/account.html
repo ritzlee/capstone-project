@@ -63,16 +63,33 @@
   <script src="script.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function(){
+      // Authentication check - redirect to login if not authenticated
       try {
+        var currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+          window.location.href = 'index.html';
+          return;
+        }
+
         var u = (window.userAPI && window.userAPI.getCurrentUser()) || null;
         if (u) {
+          // Update user name in sidebar
+          var userNameEl = document.getElementById('userName');
+          if (userNameEl) {
+            userNameEl.textContent = u.firstName || u.email || 'User';
+          }
+
+          // Populate form fields
           document.getElementById('firstName').value = u.firstName || '';
           document.getElementById('lastName').value = u.lastName || '';
           document.getElementById('email').value = u.email || '';
           document.getElementById('contact').value = u.contact || '';
           document.getElementById('password').value = u.password || '';
         }
-      } catch (e) { console.warn(e); }
+      } catch (e) {
+        console.warn('Error loading user data:', e);
+        window.location.href = 'index.html';
+      }
 
       document.getElementById('cancelBtn').addEventListener('click', function(e){
         e.preventDefault();
