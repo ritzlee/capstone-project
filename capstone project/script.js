@@ -1,4 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Helper function for safe localStorage operations
+    function getUsersFromStorage() {
+        try {
+            const data = localStorage.getItem('users');
+            return data ? JSON.parse(data) : [];
+        } catch (error) {
+            console.warn('Error reading users from localStorage:', error);
+            return [];
+        }
+    }
+
+    function saveUsersToStorage(users) {
+        try {
+            localStorage.setItem('users', JSON.stringify(users));
+        } catch (error) {
+            console.warn('Error saving users to localStorage:', error);
+            alert('Error saving user data. Please check your browser settings.');
+        }
+    }
+
     var signupForm = document.getElementById('signupForm');
     if (signupForm) {
         signupForm.addEventListener('submit', function (event) {
@@ -13,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            var users = JSON.parse(localStorage.getItem('users') || '[]');
+            var users = getUsersFromStorage();
             var exists = users.some(function (u) { return u.email === email; });
             if (exists) {
                 alert('An account with that email already exists. Please sign in.');
@@ -22,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             users.push({ firstName: firstName, email: email, password: password });
-            localStorage.setItem('users', JSON.stringify(users));
+            saveUsersToStorage(users);
 
             alert('Account created successfully!');
             window.location.href = 'index.html';
