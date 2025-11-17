@@ -19,16 +19,23 @@
         </div>
     </div>
     <script>
-        try {
-            var current = localStorage.getItem('currentUser');
-            if (current) {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Authentication check - redirect to login if not authenticated
+            try {
+                var current = localStorage.getItem('currentUser');
+                if (!current) {
+                    window.location.href = 'index.html';
+                    return;
+                }
+
                 var u = JSON.parse(current);
                 var el = document.getElementById('welcomeText');
                 if (el) el.textContent = 'Welcome, ' + (u.firstName || u.email || 'User') + '!';
+            } catch (e) {
+                console.warn('Error reading currentUser from localStorage', e);
+                window.location.href = 'index.html';
             }
-        } catch (e) {
-            console.warn('Error reading currentUser from localStorage', e);
-        }
+        });
     </script>
 </body>
 </html>
