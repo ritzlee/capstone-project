@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if (user) {
                         localStorage.setItem('currentUser', JSON.stringify(user));
-                        window.location.href = 'homepage.html';
+                        window.location.href = 'dashboard.html';
                     } else {
                 alert('Invalid credentials. Make sure you used the same email and password you registered with.');
             }
