@@ -99,13 +99,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Activity helpers (simple localStorage-backed feed)
     function getActivities() {
-        return JSON.parse(localStorage.getItem('activities') || '[]');
+        try {
+            const data = localStorage.getItem('activities');
+            return data ? JSON.parse(data) : [];
+        } catch (error) {
+            console.warn('Error reading activities from localStorage:', error);
+            return [];
+        }
     }
 
     function saveActivities(list) {
-        localStorage.setItem('activities', JSON.stringify(list));
-        // also write a timestamped signal to trigger storage listeners in other tabs
-        localStorage.setItem('activities_update', Date.now().toString());
+        try {
+            localStorage.setItem('activities', JSON.stringify(list));
+            // also write a timestamped signal to trigger storage listeners in other tabs
+            localStorage.setItem('activities_update', Date.now().toString());
+        } catch (error) {
+            console.warn('Error saving activities to localStorage:', error);
+        }
     }
 
     function addActivity(activity) {
@@ -122,20 +132,21 @@ document.addEventListener('DOMContentLoaded', function () {
         saveActivities: saveActivities
     };
 
-    // user helpers for account page
+    // user helpers for account page (updated to use safe functions)
     function getCurrentUser() {
-        try {
-            return JSON.parse(localStorage.getItem('currentUser') || 'null');
-        } catch (e) { return null; }
+        return getCurrentUserFromStorage();
     }
 
     function saveCurrentUser(user) {
         if (!user) return;
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        saveCurrentUserToStorage(user);
         // also update in users list if present
-        var users = JSON.parse(localStorage.getItem('users') || '[]');
+        var users = getUsersFromStorage();
         var idx = users.findIndex(function(u){ return u.email === user.email; });
-        if (idx >= 0) { users[idx] = user; localStorage.setItem('users', JSON.stringify(users)); }
+        if (idx >= 0) {
+            users[idx] = user;
+            saveUsersToStorage(users);
+        }
     }
 
     window.userAPI = { getCurrentUser: getCurrentUser, saveCurrentUser: saveCurrentUser };
